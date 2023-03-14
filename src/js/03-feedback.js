@@ -1,5 +1,4 @@
 const formEl = document.querySelector('.feedback-form');
-console.log(formEl);
 
 const inputMessage = {};
 
@@ -19,7 +18,12 @@ getTextFromInput();
 function getTextFromInput() {
   const localDate = JSON.parse(localStorage.getItem('feedback-form-state'));
   if (localDate) {
-    // console.log(formEl.value);
+    if (localDate.email) {
+      formEl.elements.email.value = localDate.email;
+    }
+    if (localDate.message) {
+      formEl.elements.message.value = localDate.message;
+    }
   }
 }
 
