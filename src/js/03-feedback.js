@@ -1,3 +1,5 @@
+import Throttle from 'lodash.throttle';
+
 const formEl = document.querySelector('.feedback-form');
 
 const inputMessage = {};
@@ -9,11 +11,10 @@ function handleInputValue(evt) {
 
 function handleSubmitReset(evt) {
   evt.preventDefault();
-  console.log(inputMessage);
+  console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
   formEl.reset();
   localStorage.removeItem('feedback-form-state');
 }
-getTextFromInput();
 
 function getTextFromInput() {
   const localDate = JSON.parse(localStorage.getItem('feedback-form-state'));
@@ -27,5 +28,6 @@ function getTextFromInput() {
   }
 }
 
-formEl.addEventListener('input', handleInputValue);
+formEl.addEventListener('input', Throttle(handleInputValue, 500));
 formEl.addEventListener('submit', handleSubmitReset);
+getTextFromInput();
